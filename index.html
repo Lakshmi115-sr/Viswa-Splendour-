@@ -9,13 +9,12 @@
 <style>
 body{margin:0;font-family:system-ui;background:#0b1220;color:#fff}
 
-/* HERO IMAGE */
+/* HERO */
 .hero{
 height:100vh;
 background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;
 display:flex;align-items:end;padding:30px;
-background-blend-mode:overlay;
-background-color:rgba(0,0,0,.35)
+background-blend-mode:overlay;background-color:rgba(0,0,0,.35)
 }
 .logoBox{
 backdrop-filter:blur(10px);
@@ -28,7 +27,6 @@ padding:20px;border-radius:20px
 .gallery{
 padding:20px;
 display:grid;
-grid-template-columns:1fr;
 gap:14px;
 }
 .gallery img{
@@ -57,7 +55,6 @@ box-shadow:0 30px 60px rgba(0,0,0,.5)
 .user{background:#2563eb;color:#fff;margin-left:auto}
 .bot{background:#eee}
 
-/* INSTALL */
 .install{position:fixed;left:20px;bottom:20px;background:#111827;padding:10px 14px;border-radius:10px}
 </style>
 </head>
@@ -72,7 +69,7 @@ box-shadow:0 30px 60px rgba(0,0,0,.5)
 </div>
 </div>
 
-<!-- IMAGE GALLERY (replace with your images later) -->
+<!-- IMAGE GALLERY (replace with brochure images anytime) -->
 <div class="gallery">
 <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1400">
 <img src="https://images.unsplash.com/photo-1600607687644-c7f34b5063b2?q=80&w=1400">
@@ -94,27 +91,40 @@ box-shadow:0 30px 60px rgba(0,0,0,.5)
 <div class="install" id="install" style="display:none">Install</div>
 
 <script>
-const knowledge = {
-location:"ఈ ప్రాజెక్ట్ మంగళగిరి — ఇప్పటాం ప్రాంతంలో ఉంది.",
-flats:"2 మరియు 3 BHK అపార్ట్‌మెంట్లు ఉన్నాయి.",
-sizes:"ఫ్లాట్ సైజులు సుమారు 1279 నుండి 2374 వరకు ఉన్నాయి.",
-amenities:"క్లబ్ హౌస్, స్విమ్మింగ్ పూల్, థియేటర్, జిమ్, గార్డెన్స్ ఉన్నాయి.",
-club:"లగ్జరీ క్లబ్ హౌస్ జీవనశైలిని మెరుగుపరుస్తుంది.",
-overview:"Viswa Splendour ఒక ప్రీమియం లగ్జరీ అపార్ట్‌మెంట్ ప్రాజెక్ట్."
-};
 
+/* ===== SMART BROCHURE AI ===== */
 function aiReply(q){
 q=q.toLowerCase();
 
-if(q.includes("location")||q.includes("ఎక్కడ")) return knowledge.location;
-if(q.includes("bhk")||q.includes("ఫ్లాట్")) return knowledge.flats;
-if(q.includes("size")||q.includes("సైజ్")) return knowledge.sizes;
-if(q.includes("amenities")||q.includes("సౌకర్యాలు")) return knowledge.amenities;
-if(q.includes("club")) return knowledge.club;
+/* LOCATION */
+if(q.includes("location")||q.includes("ఎక్కడ")||q.includes("place")||q.includes("address"))
+return "ఈ ప్రాజెక్ట్ మంగళగిరి — ఇప్పటాం ప్రాంతంలో ఉంది.";
 
-return knowledge.overview;
+/* PRICE */
+if(q.includes("price")||q.includes("ధర")||q.includes("cost")||q.includes("rate"))
+return "ధర వివరాల కోసం WhatsApp ద్వారా సంప్రదించండి.";
+
+/* SIZES */
+if(q.includes("size")||q.includes("sizes")||q.includes("సైజ్")||q.includes("area"))
+return "ఫ్లాట్ సైజులు సుమారు 1279 నుండి 2374 చదరపు అడుగులు ఉన్నాయి.";
+
+/* FLATS */
+if(q.includes("bhk")||q.includes("flat")||q.includes("అపార్ట్")||q.includes("ఇల్లు"))
+return "ఇక్కడ 2 మరియు 3 BHK ప్రీమియం అపార్ట్‌మెంట్లు ఉన్నాయి.";
+
+/* AMENITIES */
+if(q.includes("amenities")||q.includes("facilities")||q.includes("సౌకర్యాలు")||q.includes("features"))
+return "క్లబ్ హౌస్, స్విమ్మింగ్ పూల్, థియేటర్, జిమ్, గార్డెన్స్ వంటి సౌకర్యాలు ఉన్నాయి.";
+
+/* CLUB */
+if(q.includes("club")||q.includes("clubhouse"))
+return "లగ్జరీ క్లబ్ హౌస్ విశ్రాంతి మరియు వినోదం కోసం రూపొందించబడింది.";
+
+/* DEFAULT */
+return "Viswa Splendour ఒక ప్రీమియం లగ్జరీ ప్రాజెక్ట్. మీరు location, flats, amenities, sizes గురించి అడగవచ్చు.";
 }
 
+/* CHAT UI */
 let open=false;
 function toggleChat(){open=!open;chat.style.display=open?"flex":"none";}
 
@@ -130,7 +140,7 @@ function send(){
 const q=document.getElementById("q");
 if(!q.value) return;
 add(q.value,"user");
-setTimeout(()=>add(aiReply(q.value),"bot"),400);
+setTimeout(()=>add(aiReply(q.value),"bot"),350);
 q.value="";
 }
 
@@ -146,6 +156,7 @@ window.addEventListener('beforeinstallprompt',e=>{
 e.preventDefault();deferred=e;install.style.display='block';
 });
 install.onclick=()=>deferred.prompt();
+
 </script>
 
 </body>
