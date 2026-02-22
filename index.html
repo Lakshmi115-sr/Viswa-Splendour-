@@ -1,132 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+
 <title>Viswa Splendour</title>
-<meta name="theme-color" content="#0b1220"/>
 
 <style>
 body{margin:0;font-family:system-ui;background:#0b1220;color:#fff}
-
-/* HERO */
-.hero{
-height:100vh;
-background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;
-display:flex;align-items:end;padding:30px;
-background-blend-mode:overlay;background-color:rgba(0,0,0,.35)
-}
-.logoBox{
-backdrop-filter:blur(10px);
-background:rgba(0,0,0,.4);
-padding:20px;border-radius:20px
-}
-.logoBox h1{margin:0;font-size:28px}
-
-/* GALLERY */
-.gallery{
-padding:20px;
-display:grid;
-gap:14px;
-}
-.gallery img{
-width:100%;
-border-radius:18px;
-box-shadow:0 20px 40px rgba(0,0,0,.5)
-}
-
-/* CHAT */
-.chatBtn{position:fixed;right:20px;bottom:90px;background:#111827;padding:16px;border-radius:50%;cursor:pointer}
-.wa{position:fixed;right:20px;bottom:20px;background:#25D366;padding:16px;border-radius:50%;color:#fff;font-weight:bold}
-
-.chat{
-position:fixed;right:20px;bottom:160px;
-width:330px;height:440px;background:#fff;color:#000;
-border-radius:18px;display:none;flex-direction:column;
-box-shadow:0 30px 60px rgba(0,0,0,.5)
-}
-.chatHead{padding:12px;background:#111827;color:#fff;border-radius:18px 18px 0 0}
+.hero{height:100vh;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;display:flex;align-items:end;padding:30px}
+.logo{background:rgba(0,0,0,.5);padding:20px;border-radius:16px}
+.chatBtn{position:fixed;right:20px;bottom:90px;background:#111827;padding:16px;border-radius:50%}
+.wa{position:fixed;right:20px;bottom:20px;background:#25D366;padding:16px;border-radius:50%;color:#fff}
+.chat{position:fixed;right:20px;bottom:160px;width:320px;height:440px;background:#fff;color:#000;border-radius:16px;display:none;flex-direction:column}
+.chatHead{background:#111827;color:#fff;padding:10px}
 .chatBody{flex:1;overflow:auto;padding:10px}
-.chatInput{display:flex;border-top:1px solid #ddd}
-.chatInput input{flex:1;padding:12px;border:none}
-.chatInput button{border:none;background:#111827;color:#fff;padding:12px}
-
-.msg{margin:6px 0;padding:10px;border-radius:12px}
+.msg{padding:10px;border-radius:10px;margin:6px 0}
 .user{background:#2563eb;color:#fff;margin-left:auto}
 .bot{background:#eee}
-
-.install{position:fixed;left:20px;bottom:20px;background:#111827;padding:10px 14px;border-radius:10px}
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
 <div class="hero">
-<div class="logoBox">
+<div class="logo">
 <h1>VISWA SPLENDOUR</h1>
-<div>Premium Living Experience</div>
 </div>
 </div>
 
-<!-- IMAGE GALLERY (replace with brochure images anytime) -->
-<div class="gallery">
-<img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1400">
-<img src="https://images.unsplash.com/photo-1600607687644-c7f34b5063b2?q=80&w=1400">
-<img src="https://images.unsplash.com/photo-1600585152915-d208bec867a1?q=80&w=1400">
-</div>
-
-<!-- CHAT -->
 <div class="chat" id="chat">
-<div class="chatHead">Viswa AI (తెలుగు)</div>
+<div class="chatHead">Viswa AI</div>
 <div class="chatBody" id="chatBody"></div>
-<div class="chatInput">
-<input id="q" placeholder="ప్రాజెక్ట్ గురించి అడగండి"/>
+<div style="display:flex">
+<input id="q" style="flex:1;padding:10px">
 <button onclick="send()">Send</button>
 </div>
 </div>
 
-<div class="chatBtn" onclick="toggleChat()">AI</div>
-<a class="wa" href="https://wa.me/919502426655" target="_blank">WA</a>
-<div class="install" id="install" style="display:none">Install</div>
+<div class="chatBtn" onclick="toggle()">AI</div>
+<a class="wa" href="https://wa.me/919502426655">WA</a>
 
 <script>
-
-/* ===== SMART BROCHURE AI ===== */
 function aiReply(q){
 q=q.toLowerCase();
 
-/* LOCATION */
-if(q.includes("location")||q.includes("ఎక్కడ")||q.includes("place")||q.includes("address"))
-return "ఈ ప్రాజెక్ట్ మంగళగిరి — ఇప్పటాం ప్రాంతంలో ఉంది.";
+if(q.includes("price")||q.includes("ధర")) return "ధర వివరాల కోసం WhatsApp లో సంప్రదించండి.";
+if(q.includes("size")||q.includes("సైజ్")) return "ఫ్లాట్ సైజులు 1279 — 2374 మధ్య ఉన్నాయి.";
+if(q.includes("bhk")||q.includes("flat")) return "2 & 3 BHK అపార్ట్‌మెంట్లు ఉన్నాయి.";
+if(q.includes("amenities")||q.includes("సౌకర్యాలు")) return "క్లబ్ హౌస్, పూల్, జిమ్, థియేటర్ ఉన్నాయి.";
+if(q.includes("location")||q.includes("ఎక్కడ")) return "మంగళగిరి — ఇప్పటాం ప్రాంతం.";
 
-/* PRICE */
-if(q.includes("price")||q.includes("ధర")||q.includes("cost")||q.includes("rate"))
-return "ధర వివరాల కోసం WhatsApp ద్వారా సంప్రదించండి.";
-
-/* SIZES */
-if(q.includes("size")||q.includes("sizes")||q.includes("సైజ్")||q.includes("area"))
-return "ఫ్లాట్ సైజులు సుమారు 1279 నుండి 2374 చదరపు అడుగులు ఉన్నాయి.";
-
-/* FLATS */
-if(q.includes("bhk")||q.includes("flat")||q.includes("అపార్ట్")||q.includes("ఇల్లు"))
-return "ఇక్కడ 2 మరియు 3 BHK ప్రీమియం అపార్ట్‌మెంట్లు ఉన్నాయి.";
-
-/* AMENITIES */
-if(q.includes("amenities")||q.includes("facilities")||q.includes("సౌకర్యాలు")||q.includes("features"))
-return "క్లబ్ హౌస్, స్విమ్మింగ్ పూల్, థియేటర్, జిమ్, గార్డెన్స్ వంటి సౌకర్యాలు ఉన్నాయి.";
-
-/* CLUB */
-if(q.includes("club")||q.includes("clubhouse"))
-return "లగ్జరీ క్లబ్ హౌస్ విశ్రాంతి మరియు వినోదం కోసం రూపొందించబడింది.";
-
-/* DEFAULT */
-return "Viswa Splendour ఒక ప్రీమియం లగ్జరీ ప్రాజెక్ట్. మీరు location, flats, amenities, sizes గురించి అడగవచ్చు.";
+return "ప్రాజెక్ట్ గురించి అడగండి — flats, amenities, location, sizes.";
 }
 
-/* CHAT UI */
-let open=false;
-function toggleChat(){open=!open;chat.style.display=open?"flex":"none";}
+function toggle(){chat.style.display=chat.style.display==="flex"?"none":"flex";}
 
 function add(t,c){
 const d=document.createElement("div");
@@ -140,23 +72,9 @@ function send(){
 const q=document.getElementById("q");
 if(!q.value) return;
 add(q.value,"user");
-setTimeout(()=>add(aiReply(q.value),"bot"),350);
+setTimeout(()=>add(aiReply(q.value),"bot"),300);
 q.value="";
 }
-
-/* PWA */
-if('serviceWorker' in navigator){
-const sw=`self.addEventListener('install',e=>self.skipWaiting())`;
-navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw])));
-}
-
-/* INSTALL */
-let deferred;
-window.addEventListener('beforeinstallprompt',e=>{
-e.preventDefault();deferred=e;install.style.display='block';
-});
-install.onclick=()=>deferred.prompt();
-
 </script>
 
 </body>
