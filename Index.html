@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 
+<title>Viswa Splendour AI</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+font-family:Arial, sans-serif;
+margin:0;
+background:#f4f6fb;
+}
+
+.header{
+background:#111827;
+color:#fff;
+padding:15px;
+text-align:center;
+font-weight:bold;
+font-size:20px;
+}
+
+.chat{
+padding:15px;
+height:75vh;
+overflow:auto;
+}
+
+.msg{
+margin:10px 0;
+padding:10px 14px;
+border-radius:12px;
+max-width:80%;
+}
+
+.user{
+background:#2563eb;
+color:white;
+margin-left:auto;
+}
+
+.bot{
+background:#e5e7eb;
+}
+
+.inputBar{
+display:flex;
+padding:10px;
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+input{
+flex:1;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+button{
+margin-left:8px;
+padding:12px 16px;
+border:none;
+border-radius:10px;
+background:#111827;
+color:#fff;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">✨ Viswa Splendour AI</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="inputBar">
+<input id="q" placeholder="Ask about flats, price, amenities..." />
+<button onclick="send()">Send</button>
+</div>
+
+<script>
+
+const projectData = {
+name:"Viswa Splendour",
+location:"Ippatam, Mangalagiri",
+flats:"2 & 3 BHK",
+blocks:"2 Blocks",
+units:"255 Flats",
+sizes:"1279 – 2374 Sft",
+amenities:[
+"Clubhouse",
+"Gym",
+"Children Play Area",
+"Landscaped Garden",
+"Security",
+"Lift",
+"Power Backup",
+"Parking"
+]
+};
+
+function add(text,type){
+const div=document.createElement("div");
+div.className="msg "+type;
+div.innerText=text;
+chat.appendChild(div);
+chat.scrollTop=chat.scrollHeight;
+}
+
+function aiReply(q){
+
+q=q.toLowerCase();
+
+if(q.includes("price"))
+return "Price depends on unit size. Contact sales for latest pricing.";
+
+if(q.includes("location"))
+return projectData.name+" is located at "+projectData.location;
+
+if(q.includes("amenities"))
+return "Amenities: "+projectData.amenities.join(", ");
+
+if(q.includes("bhk") || q.includes("flat"))
+return "Available: "+projectData.flats+" apartments.";
+
+if(q.includes("size"))
+return "Flat sizes: "+projectData.sizes;
+
+if(q.includes("blocks"))
+return "Project has "+projectData.blocks+" blocks and "+projectData.units+" flats.";
+
+return "Viswa Splendour is a premium apartment project with clubhouse, luxury amenities and modern design. Ask me about flats, amenities, location or price.";
+}
+
+function send(){
+const q=document.getElementById("q").value;
+if(!q) return;
+
+add(q,"user");
+document.getElementById("q").value="";
+
+setTimeout(()=>{
+add(aiReply(q),"bot");
+},400);
+}
+
+add("Hello 👋 I am Viswa Splendour AI. Ask anything about project.","bot");
+
+</script>
+
+</body>
+</html>
