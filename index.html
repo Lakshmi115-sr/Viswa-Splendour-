@@ -4,83 +4,119 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Viswa Splendour</title>
-<meta name="theme-color" content="#111827"/>
+<meta name="theme-color" content="#0b1220"/>
 
 <style>
-body{margin:0;font-family:Arial;background:#0b1220;color:#fff}
-.hero{height:90vh;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;display:flex;align-items:center;justify-content:center;text-align:center}
-.hero h1{font-size:42px;background:rgba(0,0,0,.5);padding:20px;border-radius:16px}
-.section{padding:50px 20px;max-width:1100px;margin:auto}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:#121a2f;padding:20px;border-radius:16px}
-.price{font-size:28px;color:#22c55e;font-weight:bold}
+body{margin:0;font-family:system-ui;background:#0b1220;color:#fff}
 
-.chatBtn{position:fixed;right:20px;bottom:90px;background:#111827;padding:14px;border-radius:50%;cursor:pointer}
-.wa{position:fixed;right:20px;bottom:20px;background:#25D366;padding:14px;border-radius:50%;color:#fff;font-weight:bold}
+/* HERO IMAGE */
+.hero{
+height:100vh;
+background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;
+display:flex;align-items:end;padding:30px;
+background-blend-mode:overlay;
+background-color:rgba(0,0,0,.35)
+}
+.logoBox{
+backdrop-filter:blur(10px);
+background:rgba(0,0,0,.4);
+padding:20px;border-radius:20px
+}
+.logoBox h1{margin:0;font-size:28px}
 
-.chat{position:fixed;right:20px;bottom:150px;width:320px;height:420px;background:#fff;color:#000;border-radius:16px;display:none;flex-direction:column}
-.chatHead{padding:10px;background:#111827;color:#fff;border-radius:16px 16px 0 0}
+/* GALLERY */
+.gallery{
+padding:20px;
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+}
+.gallery img{
+width:100%;
+border-radius:18px;
+box-shadow:0 20px 40px rgba(0,0,0,.5)
+}
+
+/* CHAT */
+.chatBtn{position:fixed;right:20px;bottom:90px;background:#111827;padding:16px;border-radius:50%;cursor:pointer}
+.wa{position:fixed;right:20px;bottom:20px;background:#25D366;padding:16px;border-radius:50%;color:#fff;font-weight:bold}
+
+.chat{
+position:fixed;right:20px;bottom:160px;
+width:330px;height:440px;background:#fff;color:#000;
+border-radius:18px;display:none;flex-direction:column;
+box-shadow:0 30px 60px rgba(0,0,0,.5)
+}
+.chatHead{padding:12px;background:#111827;color:#fff;border-radius:18px 18px 0 0}
 .chatBody{flex:1;overflow:auto;padding:10px}
 .chatInput{display:flex;border-top:1px solid #ddd}
-.chatInput input{flex:1;padding:10px;border:none}
-.chatInput button{border:none;background:#111827;color:#fff;padding:10px}
+.chatInput input{flex:1;padding:12px;border:none}
+.chatInput button{border:none;background:#111827;color:#fff;padding:12px}
 
-.msg{margin:6px 0;padding:8px;border-radius:10px}
+.msg{margin:6px 0;padding:10px;border-radius:12px}
 .user{background:#2563eb;color:#fff;margin-left:auto}
 .bot{background:#eee}
 
+/* INSTALL */
 .install{position:fixed;left:20px;bottom:20px;background:#111827;padding:10px 14px;border-radius:10px}
 </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
-<h1>VISWA SPLENDOUR<br/>Luxury Living<br/><span class="price">₹5500 / SFT</span></h1>
-</div>
-
-<div class="section">
-<h2>Project Highlights</h2>
-<div class="cards">
-<div class="card">2 & 3 BHK Apartments</div>
-<div class="card">1279 – 2374 Sft</div>
-<div class="card">255 Flats • 2 Blocks</div>
-<div class="card">Luxury Clubhouse</div>
+<div class="logoBox">
+<h1>VISWA SPLENDOUR</h1>
+<div>Premium Living Experience</div>
 </div>
 </div>
 
-<div class="section">
-<h2>Amenities</h2>
-<div class="cards">
-<div class="card">Swimming Pool</div>
-<div class="card">Gym</div>
-<div class="card">Private Theatre</div>
-<div class="card">Kids Play Area</div>
-<div class="card">Landscaped Gardens</div>
-</div>
+<!-- IMAGE GALLERY (replace with your images later) -->
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1400">
+<img src="https://images.unsplash.com/photo-1600607687644-c7f34b5063b2?q=80&w=1400">
+<img src="https://images.unsplash.com/photo-1600585152915-d208bec867a1?q=80&w=1400">
 </div>
 
 <!-- CHAT -->
 <div class="chat" id="chat">
-<div class="chatHead">Viswa Assistant</div>
+<div class="chatHead">Viswa AI (తెలుగు)</div>
 <div class="chatBody" id="chatBody"></div>
 <div class="chatInput">
-<input id="q" placeholder="Ask about project"/>
+<input id="q" placeholder="ప్రాజెక్ట్ గురించి అడగండి"/>
 <button onclick="send()">Send</button>
 </div>
 </div>
 
 <div class="chatBtn" onclick="toggleChat()">AI</div>
-
 <a class="wa" href="https://wa.me/919502426655" target="_blank">WA</a>
-<div class="install" id="install" style="display:none">Install App</div>
+<div class="install" id="install" style="display:none">Install</div>
 
 <script>
-let open=false;
-function toggleChat(){
-open=!open;
-chat.style.display=open?"flex":"none";
+const knowledge = {
+location:"ఈ ప్రాజెక్ట్ మంగళగిరి — ఇప్పటాం ప్రాంతంలో ఉంది.",
+flats:"2 మరియు 3 BHK అపార్ట్‌మెంట్లు ఉన్నాయి.",
+sizes:"ఫ్లాట్ సైజులు సుమారు 1279 నుండి 2374 వరకు ఉన్నాయి.",
+amenities:"క్లబ్ హౌస్, స్విమ్మింగ్ పూల్, థియేటర్, జిమ్, గార్డెన్స్ ఉన్నాయి.",
+club:"లగ్జరీ క్లబ్ హౌస్ జీవనశైలిని మెరుగుపరుస్తుంది.",
+overview:"Viswa Splendour ఒక ప్రీమియం లగ్జరీ అపార్ట్‌మెంట్ ప్రాజెక్ట్."
+};
+
+function aiReply(q){
+q=q.toLowerCase();
+
+if(q.includes("location")||q.includes("ఎక్కడ")) return knowledge.location;
+if(q.includes("bhk")||q.includes("ఫ్లాట్")) return knowledge.flats;
+if(q.includes("size")||q.includes("సైజ్")) return knowledge.sizes;
+if(q.includes("amenities")||q.includes("సౌకర్యాలు")) return knowledge.amenities;
+if(q.includes("club")) return knowledge.club;
+
+return knowledge.overview;
 }
+
+let open=false;
+function toggleChat(){open=!open;chat.style.display=open?"flex":"none";}
 
 function add(t,c){
 const d=document.createElement("div");
@@ -88,19 +124,6 @@ d.className="msg "+c;
 d.innerText=t;
 chatBody.appendChild(d);
 chatBody.scrollTop=chatBody.scrollHeight;
-}
-
-function aiReply(q){
-q=q.toLowerCase();
-
-if(q.includes("price")) return "Price is ₹5500 per sft. Contact on WhatsApp for latest offers.";
-if(q.includes("location")) return "Project located at Ippatam, Mangalagiri near Amaravati.";
-if(q.includes("amenities")) return "Amenities include Clubhouse, Pool, Theatre, Gym, Kids Play Area, Gardens.";
-if(q.includes("size")) return "Flat sizes range from 1279 to 2374 sft.";
-if(q.includes("bhk")||q.includes("flat")) return "We have premium 2 & 3 BHK apartments.";
-if(q.includes("contact")) return "You can contact via WhatsApp 95024 26655.";
-
-return "Viswa Splendour is a premium luxury apartment project. Ask about price, flats, amenities, location or offers.";
 }
 
 function send(){
@@ -111,23 +134,16 @@ setTimeout(()=>add(aiReply(q.value),"bot"),400);
 q.value="";
 }
 
-/* PWA SERVICE WORKER INLINE */
+/* PWA */
 if('serviceWorker' in navigator){
-const swCode=`
-self.addEventListener('install',e=>self.skipWaiting());
-self.addEventListener('fetch',e=>{});
-`;
-const blob=new Blob([swCode],{type:'text/javascript'});
-const swUrl=URL.createObjectURL(blob);
-navigator.serviceWorker.register(swUrl);
+const sw=`self.addEventListener('install',e=>self.skipWaiting())`;
+navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw])));
 }
 
 /* INSTALL */
 let deferred;
 window.addEventListener('beforeinstallprompt',e=>{
-e.preventDefault();
-deferred=e;
-install.style.display='block';
+e.preventDefault();deferred=e;install.style.display='block';
 });
 install.onclick=()=>deferred.prompt();
 </script>
