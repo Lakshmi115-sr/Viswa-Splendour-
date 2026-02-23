@@ -1,79 +1,179 @@
 <!DOCTYPE html>
-<html>
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
-
-<title>Viswa Splendour</title>
+<title>Sequence AI</title>
 
 <style>
-body{margin:0;font-family:system-ui;background:#0b1220;color:#fff}
-.hero{height:100vh;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600') center/cover;display:flex;align-items:end;padding:30px}
-.logo{background:rgba(0,0,0,.5);padding:20px;border-radius:16px}
-.chatBtn{position:fixed;right:20px;bottom:90px;background:#111827;padding:16px;border-radius:50%}
-.wa{position:fixed;right:20px;bottom:20px;background:#25D366;padding:16px;border-radius:50%;color:#fff}
-.chat{position:fixed;right:20px;bottom:160px;width:320px;height:440px;background:#fff;color:#000;border-radius:16px;display:none;flex-direction:column}
-.chatHead{background:#111827;color:#fff;padding:10px}
-.chatBody{flex:1;overflow:auto;padding:10px}
-.msg{padding:10px;border-radius:10px;margin:6px 0}
-.user{background:#2563eb;color:#fff;margin-left:auto}
-.bot{background:#eee}
+body{margin:0;font-family:system-ui;background:#020617;color:#fff}
+
+.page{display:none;padding:20px}
+.active{display:block}
+
+.center{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
+
+.hero{
+background:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200') center/cover;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+backdrop-filter:blur(6px);
+}
+
+.overlay{
+background:rgba(0,0,0,.55);
+position:absolute;
+inset:0;
+}
+
+.heroContent{
+position:relative;
+z-index:2;
+text-align:center;
+}
+
+.big{
+font-size:38px;
+font-weight:800;
+background:linear-gradient(90deg,#60a5fa,#22c55e,#f59e0b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+margin:6px;
+font-weight:600;
+cursor:pointer;
+background:#2563eb;
+color:#fff;
+}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.card{
+background:#0f172a;
+padding:14px;
+border-radius:14px;
+margin:10px 0;
+cursor:pointer;
+}
+
+input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin:8px 0;
+}
 </style>
 </head>
 
 <body>
 
-<div class="hero">
-<div class="logo">
-<h1>VISWA SPLENDOUR</h1>
+<!-- HERO INDIA -->
+<div id="home" class="page active hero">
+<div class="overlay"></div>
+
+<div class="heroContent">
+<div class="big">Sequence AI</div>
+<p>IAS • IPS • Groups Preparation<br>తెలుగు విద్యార్థుల కోసం</p>
+<button onclick="go('dash')">Start Learning</button>
 </div>
 </div>
 
-<div class="chat" id="chat">
-<div class="chatHead">Viswa AI</div>
-<div class="chatBody" id="chatBody"></div>
-<div style="display:flex">
-<input id="q" style="flex:1;padding:10px">
-<button onclick="send()">Send</button>
-</div>
+<!-- DASHBOARD -->
+<div id="dash" class="page">
+<h2>Dashboard</h2>
+
+<div class="grid">
+<button onclick="go('subjects')">Subjects</button>
+<button onclick="go('ask')">Ask Topic</button>
+<button onclick="go('quiz')">Quiz</button>
+<button onclick="go('summary')">Monthly</button>
 </div>
 
-<div class="chatBtn" onclick="toggle()">AI</div>
-<a class="wa" href="https://wa.me/919502426655">WA</a>
+<button onclick="go('home')">Back</button>
+</div>
+
+<!-- SUBJECTS -->
+<div id="subjects" class="page">
+<h2>Subjects</h2>
+
+<div class="card" onclick="openSubject('polity')">Polity</div>
+<div class="card" onclick="openSubject('history')">History</div>
+<div class="card" onclick="openSubject('geography')">Geography</div>
+<div class="card" onclick="openSubject('economy')">Economy</div>
+
+<div id="subjectResult"></div>
+
+<button onclick="go('dash')">Back</button>
+</div>
+
+<!-- ASK -->
+<div id="ask" class="page">
+<h2>Topic Sequence</h2>
+<input id="topic">
+<button onclick="generate()">Generate</button>
+<div id="result"></div>
+<button onclick="go('dash')">Back</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="page">
+<h2>Quiz</h2>
+<div class="card">Constitution అమలు → 1950 ✅</div>
+<button onclick="go('dash')">Back</button>
+</div>
+
+<!-- SUMMARY -->
+<div id="summary" class="page">
+<h2>Monthly</h2>
+<div class="card">Studied: Polity</div>
+<div class="card">Weak: Economy</div>
+<button onclick="go('dash')">Back</button>
+</div>
 
 <script>
-function aiReply(q){
-q=q.toLowerCase();
-
-if(q.includes("price")||q.includes("ధర")) return "ధర వివరాల కోసం WhatsApp లో సంప్రదించండి.";
-if(q.includes("size")||q.includes("సైజ్")) return "ఫ్లాట్ సైజులు 1279 — 2374 మధ్య ఉన్నాయి.";
-if(q.includes("bhk")||q.includes("flat")) return "2 & 3 BHK అపార్ట్‌మెంట్లు ఉన్నాయి.";
-if(q.includes("amenities")||q.includes("సౌకర్యాలు")) return "క్లబ్ హౌస్, పూల్, జిమ్, థియేటర్ ఉన్నాయి.";
-if(q.includes("location")||q.includes("ఎక్కడ")) return "మంగళగిరి — ఇప్పటాం ప్రాంతం.";
-
-return "ప్రాజెక్ట్ గురించి అడగండి — flats, amenities, location, sizes.";
+function go(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
 }
 
-function toggle(){chat.style.display=chat.style.display==="flex"?"none":"flex";}
+function openSubject(s){
+let seq=""
 
-function add(t,c){
-const d=document.createElement("div");
-d.className="msg "+c;
-d.innerText=t;
-chatBody.appendChild(d);
-chatBody.scrollTop=chatBody.scrollHeight;
+if(s==="polity"){
+seq="Polity Sequence:<br>1 Constitution<br>2 Preamble<br>3 Rights<br>4 Parliament"
+}
+if(s==="geography"){
+seq="Geography Sequence:<br>1 Earth<br>2 Climate<br>3 India geography"
+}
+if(s==="history"){
+seq="History Sequence:<br>Ancient → Medieval → Modern"
+}
+if(s==="economy"){
+seq="Economy Sequence:<br>Basics → Banking → Budget"
 }
 
-function send(){
-const q=document.getElementById("q");
-if(!q.value) return;
-add(q.value,"user");
-setTimeout(()=>add(aiReply(q.value),"bot"),300);
-q.value="";
+document.getElementById("subjectResult").innerHTML='<div class="card">'+seq+'</div>'
+}
+
+function generate(){
+const t=document.getElementById('topic').value.toLowerCase()
+openSubject(t)
 }
 </script>
 
